@@ -17,11 +17,11 @@ namespace MarsRover
         public Plateau(string mapinfo)
         {
             if (mapinfo?.Contains(" ") != true)
-                throw new ArgumentNullException(mapinfo);
+                throw new ArgumentException("Invalid argument:" + mapinfo);
 
             string[] cords = mapinfo.Split(' ');
             if(!int.TryParse(cords[0], out maxX) || !int.TryParse(cords[1], out maxY))
-                throw new ArgumentNullException(mapinfo);
+                throw new ArgumentException(mapinfo);
 
             rovers = new List<Rover>();
         }
@@ -29,12 +29,12 @@ namespace MarsRover
         public void AddRover(string startPos)
         {
             if (startPos == null )
-                throw new ArgumentNullException(startPos);
+                throw new ArgumentException("Invalid argument:" + startPos);
 
 
             string[] cords = startPos.Split(' ');
             if(cords.Length < 3)
-                throw new ArgumentNullException(startPos);
+                throw new ArgumentException("Invalid argument:" + startPos);
 
             Rover rover = new Rover();
             try
@@ -46,7 +46,7 @@ namespace MarsRover
             }
             catch (Exception)
             {
-                throw new ArgumentNullException(startPos);
+                throw new ArgumentException("Invalid argument:" + startPos);
             }
         }
 
