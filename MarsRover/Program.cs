@@ -16,9 +16,12 @@ namespace MarsRover
                 List<string> positions = new List<string>();
                 for (int i = 1; i < inputs.Length; i += 2)
                 {
-                    plateau.AddRover(inputs[i]);
-                    string position = plateau.SendCommandToRover(inputs[i + 1]);
-                    positions.Add(position);
+                    bool roverAdded = plateau.AddRover(inputs[i]);
+                    if (roverAdded)
+                    {
+                        string position = plateau.SendCommandToRover(inputs[i + 1]);
+                        positions.Add(position);
+                    }
 
                 }
                 System.IO.File.WriteAllLines("output.txt", positions);

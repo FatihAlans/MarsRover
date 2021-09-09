@@ -26,7 +26,7 @@ namespace MarsRover
             rovers = new List<Rover>();
         }
 
-        public void AddRover(string startPos)
+        public bool AddRover(string startPos)
         {
             if (startPos == null )
                 throw new ArgumentException("Invalid argument:" + startPos);
@@ -39,10 +39,20 @@ namespace MarsRover
             Rover rover = new Rover();
             try
             {
-                rover.X = int.Parse(cords[0]);
-                rover.Y = int.Parse(cords[1]);
+                int x, y;
+                if (!int.TryParse(cords[0], out x) || !int.TryParse(cords[1], out y) || !Directions.Contains(cords[2]))
+                    throw new ArgumentException("Invalid argument:" + startPos);
+
+                rover.X = x;
+                rover.Y = y;
                 rover.Direction = Directions.IndexOf(cords[2]);
+                if (rover.X < 0 || rover.Y < 0 || rover.X > maxX || rover.Y > maxY)
+                {
+                    Console.WriteLine("Rover can not out of plate!");
+                    return false;
+                }
                 rovers.Add(rover);
+                return true;
             }
             catch (Exception)
             {
